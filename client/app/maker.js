@@ -3,8 +3,8 @@ const handlePost = (e) => {
     
     $("#postMessage").animate({width:'hide'}, 350);
     
-    if ($("#pContent").val() === '') {
-        handleError("Post content is required");
+    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pJob").val() === '' || $("#pDesc").val() === '') {
+        handleError("Required fields have not been filled yet.");
         return false;
     }
     
@@ -23,11 +23,19 @@ const PostForm = (props) => {
               action="/maker"
               method="POST"
         >
-            <input id="pTitle" type="text" name="title" placeholder="Title"/>
-            <textarea id="pContent" type="text" name="post" placeholder="Your text here"></textarea>
-            <input id="pTag" type="text" name="tag" placeholder="tag, something, like, this"/>
+            <p className="charTags">*Name: </p>
+            <input id="pTag" type="text" name="charName" placeholder="John Smith"/>
+            <p className="charTags">Nickname(s): </p>
+            <input id="pTag" type="text" name="charNicks" placeholder="Johnny" />
+            <p className="charTags">*Age: </p>
+            <input id="pTag" type="text" name="charAge" placeholder="25"/>
+            <p className="charTags">*Occupation: </p>
+            <input id="pTag" type="text" name="charJob" placeholder="Office Worker"/>
+            <p className="charTags">*Description: </p>
+            <textarea id="pContent" type="text" name="charDesc" placeholder="Dull, forgettable, humble."></textarea>
             <input type="hidden" id="csrfVal" name="_csrf" value={props.csrf} />
-            <input id="postSubmit" type="submit" value="Post" />
+            <input id="postSubmit" type="submit" value="Generate" />
+            <p className="charTags">*Required</p>
         </form>
     );
 };
@@ -38,13 +46,13 @@ const handleDelete = (e, post) => {
     //NEVER FORGET
     e.preventDefault();
 
-    console.log($(`#${post.title}deleteForm`).serialize() + document.querySelector("#csrfVal").value);
+    console.log($(`#${post.charName}deleteForm`).serialize() + document.querySelector("#csrfVal").value);
     
-    let postSerialize = $(`#${post.title}deleteForm`).serialize() + document.querySelector("#csrfVal").value;
+    let postSerialize = $(`#${post.charName}deleteForm`).serialize() + document.querySelector("#csrfVal").value;
     
     //console.log(postSerialize);
     
-    sendAjax('POST', $(`#${post.title}deleteForm`).attr("action"), postSerialize, function() {
+    sendAjax('POST', $(`#${post.charName}deleteForm`).attr("action"), postSerialize, function() {
         loadPostsFromServer();
     });
     
@@ -61,16 +69,19 @@ const PostList = function(props) {
     
     const postNodes = props.posts.map(function(post) {
         
-        let tagStr = post.tag.split(",");
+        //let tagStr = post.tag.split(",");
         return (
             <div key={post._id} className="post">
                 <img src="/assets/img/domoface.jpeg" alt="post face" className="postFace" />
-                <h3 className="postTitle"> {post.title} </h3>
-                <p id="postContent"> {post.post} </p><br>
+                <h3 className="postTitle"> {post.charName} </h3>
+                <p id="postContent"> Also known as {post.charNicks}</p>
+                <p id="postContent"> {post.charName} is {post.charAge} years old.</p>
+                <p id="postContent"> Currently a {post.charJob}.</p><br>
                 </br>
-                <p id="postTags"> # {tagStr}</p>
+                <p id="postContent"> Details: {post.charDesc} </p>
+
                 
-                <form id={`${post.title}deleteForm`} 
+                <form id={`${post.charName}deleteForm`} 
                       onSubmit={(e) => handleDelete(e, post)}
                       name="deleteForm"
                       action="/delete"
@@ -131,39 +142,6 @@ const ChangePWForm = (props) => {
     );
 };
 
-// Site About
-const AboutWindow = () => {
-  return(
-        <div id="info">
-            <h3 className="formTitle">What can you do here?</h3>
-            <p id="desc">
-                Going through existential crisis and can't sleep at ungodly hours at night? Worry not, you can post your thoughts and rants on here... For the viewing of no one but your own!
-            </p>
-        </div>
-  );
-};
-
-// Purchasable Themes
-const ThemesWindow = () => {
-    return(
-        <div id="themes">
-            <h3 className="formTitle">THEMES</h3>
-            <div id="thm1">
-                <p>Autumn Theme</p>
-                <p className="purchase">PURCHASE</p>
-            </div>
-            <div id="thm2">
-                <p>Winter Theme</p>
-                <p className="purchase">PURCHASE</p>
-            </div>
-            <div id="thm3">
-                <p>Summer Theme</p>
-                <p className="purchase">PURCHASE</p>
-            </div>
-        </div>
-    );
-};
-
 const loadPostsFromServer = () => {
     sendAjax('GET', '/getPosts', null, (data) => {
         ReactDOM.render(
@@ -176,18 +154,6 @@ const loadPostsFromServer = () => {
 const createPasswordChangeWindow = (csrf) => {
     ReactDOM.render(
         <ChangePWForm csrf={csrf} />, document.querySelector("#posts")
-    );
-};
-
-const createAboutWindow = () => {
-    ReactDOM.render(
-        <AboutWindow />, document.querySelector("#posts")
-    );
-};
-
-const createThemesWindow = () => {
-    ReactDOM.render(
-        <ThemesWindow />, document.querySelector("#posts")
     );
 };
 
@@ -209,18 +175,6 @@ const setup = function(csrf) {
     changePWButton.addEventListener("click", (e) => {
         e.preventDefault();
         createPasswordChangeWindow(csrf);
-        return false;
-    });
-    
-    aboutButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        createAboutWindow();
-        return false;
-    });
-    
-    themesButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        createThemesWindow();
         return false;
     });
     

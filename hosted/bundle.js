@@ -5,8 +5,8 @@ var handlePost = function handlePost(e) {
 
     $("#postMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#pContent").val() === '') {
-        handleError("Post content is required");
+    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pJob").val() === '' || $("#pDesc").val() === '') {
+        handleError("Required fields have not been filled yet.");
         return false;
     }
 
@@ -26,11 +26,43 @@ var PostForm = function PostForm(props) {
             action: "/maker",
             method: "POST"
         },
-        React.createElement("input", { id: "pTitle", type: "text", name: "title", placeholder: "Title" }),
-        React.createElement("textarea", { id: "pContent", type: "text", name: "post", placeholder: "Your text here" }),
-        React.createElement("input", { id: "pTag", type: "text", name: "tag", placeholder: "tag, something, like, this" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Name: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charName", placeholder: "John Smith" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "Nickname(s): "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charNicks", placeholder: "Johnny" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Age: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charAge", placeholder: "25" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Occupation: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "Office Worker" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Description: "
+        ),
+        React.createElement("textarea", { id: "pContent", type: "text", name: "charDesc", placeholder: "Dull, forgettable, humble." }),
         React.createElement("input", { type: "hidden", id: "csrfVal", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { id: "postSubmit", type: "submit", value: "Post" })
+        React.createElement("input", { id: "postSubmit", type: "submit", value: "Generate" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Required"
+        )
     );
 };
 
@@ -40,13 +72,13 @@ var handleDelete = function handleDelete(e, post) {
     //NEVER FORGET
     e.preventDefault();
 
-    console.log($("#" + post.title + "deleteForm").serialize() + document.querySelector("#csrfVal").value);
+    console.log($("#" + post.charName + "deleteForm").serialize() + document.querySelector("#csrfVal").value);
 
-    var postSerialize = $("#" + post.title + "deleteForm").serialize() + document.querySelector("#csrfVal").value;
+    var postSerialize = $("#" + post.charName + "deleteForm").serialize() + document.querySelector("#csrfVal").value;
 
     //console.log(postSerialize);
 
-    sendAjax('POST', $("#" + post.title + "deleteForm").attr("action"), postSerialize, function () {
+    sendAjax('POST', $("#" + post.charName + "deleteForm").attr("action"), postSerialize, function () {
         loadPostsFromServer();
     });
 
@@ -60,7 +92,7 @@ var PostList = function PostList(props) {
 
     var postNodes = props.posts.map(function (post) {
 
-        var tagStr = post.tag.split(",");
+        //let tagStr = post.tag.split(",");
         return React.createElement(
             "div",
             { key: post._id, className: "post" },
@@ -69,26 +101,42 @@ var PostList = function PostList(props) {
                 "h3",
                 { className: "postTitle" },
                 " ",
-                post.title,
+                post.charName,
                 " "
             ),
             React.createElement(
                 "p",
                 { id: "postContent" },
+                " Also known as ",
+                post.charNicks
+            ),
+            React.createElement(
+                "p",
+                { id: "postContent" },
                 " ",
-                post.post,
-                " "
+                post.charName,
+                " is ",
+                post.charAge,
+                " years old."
+            ),
+            React.createElement(
+                "p",
+                { id: "postContent" },
+                " Currently a ",
+                post.charJob,
+                "."
             ),
             React.createElement("br", null),
             React.createElement(
                 "p",
-                { id: "postTags" },
-                " # ",
-                tagStr
+                { id: "postContent" },
+                " Details: ",
+                post.charDesc,
+                " "
             ),
             React.createElement(
                 "form",
-                { id: post.title + "deleteForm",
+                { id: post.charName + "deleteForm",
                     onSubmit: function onSubmit(e) {
                         return handleDelete(e, post);
                     },
@@ -154,79 +202,6 @@ var ChangePWForm = function ChangePWForm(props) {
     );
 };
 
-// Site About
-var AboutWindow = function AboutWindow() {
-    return React.createElement(
-        "div",
-        { id: "info" },
-        React.createElement(
-            "h3",
-            { className: "formTitle" },
-            "What can you do here?"
-        ),
-        React.createElement(
-            "p",
-            { id: "desc" },
-            "Going through existential crisis and can't sleep at ungodly hours at night? Worry not, you can post your thoughts and rants on here... For the viewing of no one but your own!"
-        )
-    );
-};
-
-// Purchasable Themes
-var ThemesWindow = function ThemesWindow() {
-    return React.createElement(
-        "div",
-        { id: "themes" },
-        React.createElement(
-            "h3",
-            { className: "formTitle" },
-            "THEMES"
-        ),
-        React.createElement(
-            "div",
-            { id: "thm1" },
-            React.createElement(
-                "p",
-                null,
-                "Autumn Theme"
-            ),
-            React.createElement(
-                "p",
-                { className: "purchase" },
-                "PURCHASE"
-            )
-        ),
-        React.createElement(
-            "div",
-            { id: "thm2" },
-            React.createElement(
-                "p",
-                null,
-                "Winter Theme"
-            ),
-            React.createElement(
-                "p",
-                { className: "purchase" },
-                "PURCHASE"
-            )
-        ),
-        React.createElement(
-            "div",
-            { id: "thm3" },
-            React.createElement(
-                "p",
-                null,
-                "Summer Theme"
-            ),
-            React.createElement(
-                "p",
-                { className: "purchase" },
-                "PURCHASE"
-            )
-        )
-    );
-};
-
 var loadPostsFromServer = function loadPostsFromServer() {
     sendAjax('GET', '/getPosts', null, function (data) {
         ReactDOM.render(React.createElement(PostList, { posts: data.posts }), document.querySelector("#posts"));
@@ -236,14 +211,6 @@ var loadPostsFromServer = function loadPostsFromServer() {
 // Windows For Different Pages
 var createPasswordChangeWindow = function createPasswordChangeWindow(csrf) {
     ReactDOM.render(React.createElement(ChangePWForm, { csrf: csrf }), document.querySelector("#posts"));
-};
-
-var createAboutWindow = function createAboutWindow() {
-    ReactDOM.render(React.createElement(AboutWindow, null), document.querySelector("#posts"));
-};
-
-var createThemesWindow = function createThemesWindow() {
-    ReactDOM.render(React.createElement(ThemesWindow, null), document.querySelector("#posts"));
 };
 
 var createMainWindow = function createMainWindow(csrf) {
@@ -260,18 +227,6 @@ var setup = function setup(csrf) {
     changePWButton.addEventListener("click", function (e) {
         e.preventDefault();
         createPasswordChangeWindow(csrf);
-        return false;
-    });
-
-    aboutButton.addEventListener("click", function (e) {
-        e.preventDefault();
-        createAboutWindow();
-        return false;
-    });
-
-    themesButton.addEventListener("click", function (e) {
-        e.preventDefault();
-        createThemesWindow();
         return false;
     });
 

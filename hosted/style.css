@@ -7,22 +7,23 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #35465c;
+    background-color: #FEE7B3;
     font-family: 'Noto Sans JP', sans-serif;
 }
 
 #siteTitle {
-    font-size: 100px;
-    color: #fff;
+    font-size: 50px;
+    color: #877A5E;
     text-align: center;
-    margin-left: 30px;
-    margin-top: 200px;
+    margin-top: 5px;
+    margin-left: 10px;
+    float: left;
     font-family: 'Audiowide', cursive;
 }
 
 .formTitle {
     text-align: center;
-    border-bottom: 0.5px solid #F2F2F2;
+    border-bottom: 0.5px solid #877A5E;
     font-size: 1.3em;
 }
 
@@ -30,7 +31,7 @@ html, body {
 nav {
     width: 100%;
     height: 10px;
-    background-color: #35465c;
+    background-color: #FEE7B3;
 }
 
 .navlink {
@@ -62,12 +63,16 @@ nav {
     margin: 0 auto;
     background-color: #fff;
     width: 545px;
-    height: 270px;
+    height: 670px;
     margin-top: 100px;
     border-bottom: solid #262626;
     position: relative;
 }
 
+.charTags {
+    padding: 2px;
+    margin-left: 20px;
+}
 
 #pTitle {
     height: 50px;
@@ -101,9 +106,10 @@ nav {
 }
 
 #postSubmit {
-    color: #79DAFF;
-    margin-left: 84%;
-    background-color: #00B8FF;
+    color: #fff;
+    margin-top: 5px;
+    margin-left: 75%;
+    background-color: #262626;
     font-size: 25px;
     font-family: 'Noto Sans JP', sans-serif;
 }
@@ -120,7 +126,7 @@ nav {
     height: 300px;
     width: 250px;
     margin: 0 auto;
-    padding-top: 10px;
+    padding-top: 250px;
     font-size: 1.2em;
 }
 
@@ -132,9 +138,9 @@ nav {
     margin-top: 14px;
     font-size: 1.2em;
     width: 100px;
-    background-color: #00B8FF;
+    background-color: #262626;
     border-radius: 2px;
-    border-color: #00B8FF;
+    border-color: #262626;
     padding: 3px 0px;
     color: white;
     text-decoration: none;
@@ -251,7 +257,7 @@ h3.postTitle {
     margin-left: 50px;
     font-weight: bold;
     font-size: 2em;
-    border-bottom: 0.5px solid #F2F2F2;
+    border-bottom: 0.5px solid #877A5E;
     color: #262626;
 }
 
@@ -259,7 +265,7 @@ h3.postTitle {
     width: 400px;
     margin-top: -15px;
     margin-left: 50px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #262626;
 }
 
@@ -301,7 +307,7 @@ h3.postTitle {
 #thm1, #thm2 {
     width: 50%;
     margin-left: 45px;
-    border-bottom: 0.5px solid #F2F2F2;
+    border-bottom: 0.5px solid #877A5E;
     font-size: 20px;
 }
 

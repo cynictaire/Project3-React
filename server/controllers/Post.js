@@ -9,19 +9,21 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An unexpected error has occured.' });
     }
 
-    return res.render('app', { csrfToken: req.csrfToken(), posts: docs });
+    return res.render('app', { csrfToken: req.csrfToken(), charAges: docs });
   });
 };
 
 const makePost = (req, res) => {
-  if (!req.body.title || !req.body.post) {
-    return res.status(400).json({ error: 'Title and post content are required.' });
+  if (!req.body.charName || !req.body.charAge || !req.body.charJob || !req.body.charDesc) {
+    return res.status(400).json({ error: 'Required informations have not been filled yet.' });
   }
 
   const postData = {
-    title: req.body.title,
-    post: req.body.post,
-    tag: req.body.tag,
+    charName: req.body.charName,
+    charNicks: req.body.charNicks,
+    charAge: req.body.charAge,
+    charJob: req.body.charJob,
+    charDesc: req.body.charDesc,
     owner: req.session.account._id,
   };
 
