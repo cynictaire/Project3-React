@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Noto+Sans+JP');
+
+/*** BODY ***/
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #35465c;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#siteTitle {
+    font-size: 100px;
+    color: #fff;
+    text-align: center;
+    margin-left: 30px;
+    margin-top: 200px;
+    font-family: 'Audiowide', cursive;
+}
+
+.formTitle {
+    text-align: center;
+    border-bottom: 0.5px solid #F2F2F2;
+    font-size: 1.3em;
+}
+
+/*** NAVIGATION ***/
+nav {
+    width: 100%;
+    height: 10px;
+    background-color: #35465c;
+}
+
+.navlink {
+    padding: 20px;
+    padding-top: 35px;
+    padding-left: 20px;
+    color: white;
+    font-size: 1.3em;
+    float: right;
+}
+
+.navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #262626;
+    transition: background-color 0.4s ease;
+}
+
+.navlink a:hover {
+    transition: background-color 0.8s ease;
+    background-color: #fff;
+    color: #2f2f2f;
+}
+
+/*** POST FORM ***/
+#postForm {
+    margin: 0 auto;
+    background-color: #fff;
+    width: 545px;
+    height: 270px;
+    margin-top: 100px;
+    border-bottom: solid #262626;
+    position: relative;
+}
+
+
+#pTitle {
+    height: 50px;
+    width: 500px;
+    margin-top: 30px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#pContent {
+    height: 60px;
+    width: 500px;
+    padding-top: 15px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#pTag {
+    height: 35px;
+    width: 500px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#postSubmit {
+    color: #79DAFF;
+    margin-left: 84%;
+    background-color: #00B8FF;
+    font-size: 25px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#deleteButton {
+    color: #fff;
+    margin-left: 85%;
+    background-color: #9DA6AF;
+    font-size: 15px;
+}
+
+/*** LOGIN / SIGN UP / PW CHANGE ***/
+.mainForm {
+    height: 300px;
+    width: 250px;
+    margin: 0 auto;
+    padding-top: 10px;
+    font-size: 1.2em;
+}
+
+.formSubmit {
+    transition: background-color 0.4s ease;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 1.2em;
+    width: 100px;
+    background-color: #00B8FF;
+    border-radius: 2px;
+    border-color: #00B8FF;
+    padding: 3px 0px;
+    color: white;
+    text-decoration: none;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.changePWForm {
+    height: 250px;
+    width: 250px;
+    margin: 0 auto;
+    padding-top: 20px;
+    background-color: #fff;
+    border-bottom: solid #262626;
+    position: relative;
+}
+
+#pwSubmit {
+    color: #fff;
+    margin-left: 23%;
+    background-color: #9DA6AF;
+    margin-top: 15px;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#user, #pass, #pass2, #oldPass {
+    text-align: center;
+    font-size: 1.1em;
+    width: 180px;
+    border-radius: 6px;
+    margin-left: 35px;
+    margin-bottom: 10px;
+}
+
+#user:focus, #pass:focus, #pass2:focus, #oldPass:focus {
+    outline: none;
+    box-shadow: 0px 0px 1px 1px #55acee;
+}
+
+/*** ERROR MESSAGE ***/
+#postMessage {
+    display:none;
+    top: 250px;
+    width: 250px;
+    height: 700px;
+    position: absolute;
+    z-index: 200;
+    right: 0px;
+    overflow: hidden;
+}
+
+#postMessage h3 {
+    width: 200px;
+    position: absolute;
+    top: 0px;
+    left: 20px;
+}
+
+#speech {
+    height: 120px;
+    width: 250px;
+    z-index:300;
+}
+
+#errorMessage {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #262626;
+}
+
+/*** USER MADE POSTS ***/
+#post {
+    z-index: 225;
+    margin-top: -20px;
+    margin-left: 135px;
+    height: 450px;
+    width: 300px;
+    -ms-transform: rotate(330deg);
+    -webkit-transform: rotate(330deg); 
+    transform: rotate(330deg);
+}
+
+#posts {
+    width: 55%;
+    min-width: 300px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.post {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 12px;
+    border-bottom: 0.5px solid #262626;
+    background-color: #fff;
+    padding: 10px;
+    min-height: 60px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+img.postFace {
+    margin-right: 200px;
+    height: 38px;
+    width: 35px;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+h3.postTitle {
+    width: 400px;
+    margin-top: -28px;
+    margin-left: 50px;
+    font-weight: bold;
+    font-size: 2em;
+    border-bottom: 0.5px solid #F2F2F2;
+    color: #262626;
+}
+
+#postContent {
+    width: 400px;
+    margin-top: -15px;
+    margin-left: 50px;
+    font-size: 1.2em;
+    color: #262626;
+}
+
+#postTags {
+    width: 400px;
+    margin-top: -25px;
+    margin-left: 50px;
+    font-size: 1em;
+    font-style: italic;
+    color: #2f2f2f;
+}
+
+.post:first-child {
+    margin-top: 10px;
+}
+
+.post:last-child {
+    margin-bottom: 10px;
+}
+
+/*** ABOUT SITE ***/
+#info {
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 15px;
+    border-bottom: 0.5px solid #262626;
+}
+
+/*** THEMES ***/
+#themes {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 15px;
+    position: relative;
+}
+
+#thm1, #thm2 {
+    width: 50%;
+    margin-left: 45px;
+    border-bottom: 0.5px solid #F2F2F2;
+    font-size: 20px;
+}
+
+#thm3 {
+    width: 50%;
+    margin-left: 45px;
+    font-size: 20px;
+}
+
+.purchase {
+    color: #fff;
+    background-color: #9DA6AF;
+    font-size: 15px;
+    padding: 5px;
+    text-align: center;
+}
+
+/*** ERROR PAGE ***/
+#err {
+    width: 500px;
+    height: 25px;
+    margin: 0 auto;
+    margin-top: 300px;
+    background-color: #fff;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
