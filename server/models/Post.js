@@ -67,7 +67,9 @@ PostSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
-  return PostModel.find(search).select('charName charNicks charAge charJob charDesc').exec(callback);
+  return PostModel.find(search).select(
+      'charName charNicks charAge charJob charDesc')
+      .exec(callback);
 };
 
 // Delete Posts
