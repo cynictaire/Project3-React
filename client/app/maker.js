@@ -30,13 +30,47 @@ const PostForm = (props) => {
             <p className="charTags">*Age: </p>
             <input id="pTag" type="text" name="charAge" placeholder="25"/>
             <p className="charTags">*Occupation: </p>
-            <input id="pTag" type="text" name="charJob" placeholder="Office Worker"/>
+            <input id="pTag" type="text" name="charJob" placeholder="office worker"/>
             <p className="charTags">*Description: </p>
             <textarea id="pContent" type="text" name="charDesc" placeholder="Dull, forgettable, humble."></textarea>
             <input type="hidden" id="csrfVal" name="_csrf" value={props.csrf} />
             <input id="postSubmit" type="submit" value="Generate" />
             <p className="charTags">*Required</p>
         </form>
+    );
+};
+
+//Edit Form
+const EditForm = (props) => {
+    return (
+        <form id="postForm"
+              onSubmit={handlePost}
+              name="postForm"
+              action="/update"
+              method="POST"
+        >
+            <p className="charTags">*Name: </p>
+            <input id="pTag" type="text" name="charName" placeholder="John Smith" defaultValue={props.posts.charName} />
+            <p className="charTags">Nickname(s): </p>
+            <input id="pTag" type="text" name="charNicks" placeholder="Johnny" defaultValue={props.posts.charNicks} />
+            <p className="charTags">*Age: </p>
+            <input id="pTag" type="text" name="charAge" placeholder="25" defaultValue={props.posts.charAge} />
+            <p className="charTags">*Occupation: </p>
+            <input id="pTag" type="text" name="charJob" placeholder="office worker" defaultValue={props.posts.charJob} />
+            <p className="charTags">*Description: </p>
+            <textarea id="pContent" type="text" name="charDesc" placeholder="Dull, forgettable, humble." defaultValue={props.posts.charDesc}></textarea>
+            <input type="hidden" name="postID" value={post._id} />
+            <input type="hidden" name="_csrf" value={props.csrf} />
+            <input id="postSubmit" type="submit" value="Update" />
+            <p className="charTags">*Required</p>
+        </form>
+    );
+};
+
+//Edit Post
+const postEdit = (doc) => {
+    ReactDOM.render(
+        <EditForm posts={doc} csrf={document.querySelector("#csrfVal").value} />, document.querySelector("#posts")
     );
 };
 
@@ -91,6 +125,10 @@ const PostList = function(props) {
                     <input type="hidden" name="_csrf" value={props.csrf} />
                     <input id="deleteButton" type="submit" value="Delete"/>
                 </form>
+                
+                <div id="editButton">
+                <button type="button" onClick={() => {postEdit(props.posts);}}>Edit</button>
+                </div>
             </div>
         );
     });

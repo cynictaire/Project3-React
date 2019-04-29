@@ -18,7 +18,7 @@ const PostSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
-    
+
   charNicks: {
     type: String,
     required: false,
@@ -30,13 +30,13 @@ const PostSchema = new mongoose.Schema({
     min: 0,
     required: true,
   },
-    
+
   charJob: {
     type: String,
     required: true,
     trim: true,
   },
-    
+
   charDesc: {
     type: String,
     required: true,

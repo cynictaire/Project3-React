@@ -49,7 +49,7 @@ var PostForm = function PostForm(props) {
             { className: "charTags" },
             "*Occupation: "
         ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "Office Worker" }),
+        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "office worker" }),
         React.createElement(
             "p",
             { className: "charTags" },
@@ -64,6 +64,62 @@ var PostForm = function PostForm(props) {
             "*Required"
         )
     );
+};
+
+//Edit Form
+var EditForm = function EditForm(props) {
+    return React.createElement(
+        "form",
+        { id: "postForm",
+            onSubmit: handlePost,
+            name: "postForm",
+            action: "/update",
+            method: "POST"
+        },
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Name: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charName", placeholder: "John Smith", defaultValue: props.posts.charName }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "Nickname(s): "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charNicks", placeholder: "Johnny", defaultValue: props.posts.charNicks }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Age: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charAge", placeholder: "25", defaultValue: props.posts.charAge }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Occupation: "
+        ),
+        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "office worker", defaultValue: props.posts.charJob }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Description: "
+        ),
+        React.createElement("textarea", { id: "pContent", type: "text", name: "charDesc", placeholder: "Dull, forgettable, humble.", defaultValue: props.posts.charDesc }),
+        React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { id: "postSubmit", type: "submit", value: "Update" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Required"
+        )
+    );
+};
+
+//Edit Post
+var postEdit = function postEdit(doc) {
+    ReactDOM.render(React.createElement(EditForm, { posts: doc, csrf: document.querySelector("#csrfVal").value }), document.querySelector("#posts"));
 };
 
 // Delete Posts
@@ -147,6 +203,17 @@ var PostList = function PostList(props) {
                 React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
                 React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
                 React.createElement("input", { id: "deleteButton", type: "submit", value: "Delete" })
+            ),
+            React.createElement(
+                "div",
+                { id: "editButton" },
+                React.createElement(
+                    "button",
+                    { type: "button", onClick: function onClick() {
+                            postEdit(props.posts);
+                        } },
+                    "Edit"
+                )
             )
         );
     });

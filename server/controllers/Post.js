@@ -68,6 +68,42 @@ const deletePosts = (request, response) => {
   return false;
 };
 
+const updatePosts = (request, response) => {
+  const req = request;
+  const res = response;
+
+  console.log('update');
+
+  return Post.PostModel.findByOwnderAndID(
+        req.session.account._id,
+        req.body.id,
+        (err, doc) => {
+          if (err) {
+            console.log(err);
+            return res.status(400).json({ error: 'An error has occurred.' });
+          }
+
+          const updatedPost = doc[0];
+
+          updatedPost.charName = req.body.charName;
+          updatedPost.charNicks = req.body.charNicks;
+          updatedPost.charAge = req.body.charAge;
+          updatedPost.charJob = req.body.charJob;
+          updatedPost.charDesc = req.body.charDesc;
+
+          const updatePostPromise = updatedPost.save();
+
+          updatePostPromise.then(() => res.json({ redirect: '/tasks' }));
+
+          updatePostPromise.catch((err2) => {
+            console.log(err2);
+            return res.status(400).json({ error: 'An error has occurred.' });
+          });
+
+          return updatePostPromise;
+        });
+};
+
 const getPosts = (request, response) => {
   const req = request;
   const res = response;
@@ -86,3 +122,4 @@ module.exports.makerPage = makerPage;
 module.exports.getPosts = getPosts;
 module.exports.make = makePost;
 module.exports.deletePosts = deletePosts;
+module.exports.updatePosts = updatePosts;
