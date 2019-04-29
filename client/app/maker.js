@@ -40,40 +40,6 @@ const PostForm = (props) => {
     );
 };
 
-//Edit Form
-const EditForm = (props) => {
-    return (
-        <form id="postForm"
-              onSubmit={handlePost}
-              name="postForm"
-              action="/update"
-              method="POST"
-        >
-            <p className="charTags">*Name: </p>
-            <input id="pTag" type="text" name="charName" placeholder="John Smith" defaultValue={props.posts.charName} />
-            <p className="charTags">Nickname(s): </p>
-            <input id="pTag" type="text" name="charNicks" placeholder="Johnny" defaultValue={props.posts.charNicks} />
-            <p className="charTags">*Age: </p>
-            <input id="pTag" type="text" name="charAge" placeholder="25" defaultValue={props.posts.charAge} />
-            <p className="charTags">*Occupation: </p>
-            <input id="pTag" type="text" name="charJob" placeholder="office worker" defaultValue={props.posts.charJob} />
-            <p className="charTags">*Description: </p>
-            <textarea id="pContent" type="text" name="charDesc" placeholder="Dull, forgettable, humble." defaultValue={props.posts.charDesc}></textarea>
-            <input type="hidden" name="postID" value={post._id} />
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input id="postSubmit" type="submit" value="Update" />
-            <p className="charTags">*Required</p>
-        </form>
-    );
-};
-
-//Edit Post
-const postEdit = (doc) => {
-    ReactDOM.render(
-        <EditForm posts={doc} csrf={document.querySelector("#csrfVal").value} />, document.querySelector("#posts")
-    );
-};
-
 // Delete Posts
 const handleDelete = (e, post) => {
     
@@ -107,12 +73,12 @@ const PostList = function(props) {
         return (
             <div key={post._id} className="post">
                 <img src="/assets/img/domoface.jpeg" alt="post face" className="postFace" />
-                <h3 className="postTitle"> {post.charName} </h3>
-                <p id="postContent"> Also known as {post.charNicks}</p>
-                <p id="postContent"> {post.charName} is {post.charAge} years old.</p>
-                <p id="postContent"> Currently a {post.charJob}.</p><br>
+                <h3 className="postTitle"> {post.title} </h3>
+                <p id="postContent"> Also known as {post.nicks}</p>
+                <p id="postContent"> {post.charName} is {post.age} years old.</p>
+                <p id="postContent"> Currently a {post.job}.</p><br>
                 </br>
-                <p id="postContent"> Details: {post.charDesc} </p>
+                <p id="postContent"> Details: {post.post} </p>
 
                 
                 <form id={`${post.charName}deleteForm`} 
@@ -125,10 +91,6 @@ const PostList = function(props) {
                     <input type="hidden" name="_csrf" value={props.csrf} />
                     <input id="deleteButton" type="submit" value="Delete"/>
                 </form>
-                
-                <div id="editButton">
-                <button type="button" onClick={() => {postEdit(props.posts);}}>Edit</button>
-                </div>
             </div>
         );
     });
@@ -180,6 +142,39 @@ const ChangePWForm = (props) => {
     );
 };
 
+// Site About
+const AboutWindow = () => {
+  return(
+        <div id="info">
+            <h3 className="formTitle">What can you do here?</h3>
+            <p id="desc">
+                Going through existential crisis and can't sleep at ungodly hours at night? Worry not, you can post your thoughts and rants on here... For the viewing of no one but your own!
+            </p>
+        </div>
+  );
+};
+
+// Purchasable Themes
+const ThemesWindow = () => {
+    return(
+        <div id="themes">
+            <h3 className="formTitle">THEMES</h3>
+            <div id="thm1">
+                <p>Autumn Theme</p>
+                <p className="purchase">PURCHASE</p>
+            </div>
+            <div id="thm2">
+                <p>Winter Theme</p>
+                <p className="purchase">PURCHASE</p>
+            </div>
+            <div id="thm3">
+                <p>Summer Theme</p>
+                <p className="purchase">PURCHASE</p>
+            </div>
+        </div>
+    );
+};
+
 const loadPostsFromServer = () => {
     sendAjax('GET', '/getPosts', null, (data) => {
         ReactDOM.render(
@@ -192,6 +187,18 @@ const loadPostsFromServer = () => {
 const createPasswordChangeWindow = (csrf) => {
     ReactDOM.render(
         <ChangePWForm csrf={csrf} />, document.querySelector("#posts")
+    );
+};
+
+const createAboutWindow = () => {
+    ReactDOM.render(
+        <AboutWindow />, document.querySelector("#posts")
+    );
+};
+
+const createThemesWindow = () => {
+    ReactDOM.render(
+        <ThemesWindow />, document.querySelector("#posts")
     );
 };
 
@@ -213,6 +220,18 @@ const setup = function(csrf) {
     changePWButton.addEventListener("click", (e) => {
         e.preventDefault();
         createPasswordChangeWindow(csrf);
+        return false;
+    });
+    
+    aboutButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createAboutWindow();
+        return false;
+    });
+    
+    themesButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createThemesWindow();
         return false;
     });
     

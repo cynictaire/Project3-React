@@ -9,7 +9,7 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An unexpected error has occured.' });
     }
 
-    return res.render('app', { csrfToken: req.csrfToken(), charAges: docs });
+    return res.render('app', { csrfToken: req.csrfToken(), posts: docs });
   });
 };
 
@@ -17,16 +17,16 @@ const makePost = (req, res) => {
   if (!req.body.charName || !req.body.charAge || !req.body.charJob || !req.body.charDesc) {
     return res.status(400).json({ error: 'Required informations have not been filled yet.' });
   }
-
+    
   const postData = {
-    charName: req.body.charName,
-    charNicks: req.body.charNicks,
-    charAge: req.body.charAge,
-    charJob: req.body.charJob,
-    charDesc: req.body.charDesc,
+    title: req.body.charName,
+    nicks: req.body.charNicks,
+    age: req.body.charAge,
+    job: req.body.charJob,
+    post: req.body.charDesc,
     owner: req.session.account._id,
   };
-
+    
   const newPost = new Post.PostModel(postData);
 
   const postPromise = newPost.save();
@@ -68,42 +68,6 @@ const deletePosts = (request, response) => {
   return false;
 };
 
-const updatePosts = (request, response) => {
-  const req = request;
-  const res = response;
-
-  console.log('update');
-
-  return Post.PostModel.findByOwnderAndID(
-        req.session.account._id,
-        req.body.id,
-        (err, doc) => {
-          if (err) {
-            console.log(err);
-            return res.status(400).json({ error: 'An error has occurred.' });
-          }
-
-          const updatedPost = doc[0];
-
-          updatedPost.charName = req.body.charName;
-          updatedPost.charNicks = req.body.charNicks;
-          updatedPost.charAge = req.body.charAge;
-          updatedPost.charJob = req.body.charJob;
-          updatedPost.charDesc = req.body.charDesc;
-
-          const updatePostPromise = updatedPost.save();
-
-          updatePostPromise.then(() => res.json({ redirect: '/tasks' }));
-
-          updatePostPromise.catch((err2) => {
-            console.log(err2);
-            return res.status(400).json({ error: 'An error has occurred.' });
-          });
-
-          return updatePostPromise;
-        });
-};
-
 const getPosts = (request, response) => {
   const req = request;
   const res = response;
@@ -122,4 +86,3 @@ module.exports.makerPage = makerPage;
 module.exports.getPosts = getPosts;
 module.exports.make = makePost;
 module.exports.deletePosts = deletePosts;
-module.exports.updatePosts = updatePosts;

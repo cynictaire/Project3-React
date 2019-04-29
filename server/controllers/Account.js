@@ -86,44 +86,45 @@ const changePW = (request, response) => {
   if (!req.body.oldPass || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
-
+    
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
-
+    
   return Account.AccountModel.authenticate(req.session.account.username, req.body.oldPass,
     (err, account) => {
       if (err || !account) {
         return res.status(401).json({ error: 'Password Incorrect' });
       }
-
-      return Account.AccountModel.generateHash(req.body.pass,
-          (salt, hash) =>
-          Account.AccountModel.findByUsername(req.session.account.username, (err2, acc) => {
-            if (err2) {
-              console.log(err2);
-              return res.status(400).json({ error: 'An unexpected error occurred' });
-            }
-
+        
+      return Account.AccountModel.generateHash(req.body.pass, 
+          (salt, hash) => 
+          Account.AccountModel.findByUsername
+          (req.session.account.username, (err2, acc) => {
+              if (err2) {
+                console.log(err2);
+                return res.status(400).json({ error: 'An unexpected error occurred' });
+              }
+              
               // Update the account with new password
-            const updatedAcc = acc;
+              const updatedAcc = acc;
+              
+              updatedAcc.salt = salt;
+              updatedAcc.password = hash;
 
-            updatedAcc.salt = salt;
-            updatedAcc.password = hash;
+              const savePromise = updatedAcc.save();
 
-            const savePromise = updatedAcc.save();
-
-            savePromise.then(() =>
+              savePromise.then(() => 
                 res.json({ redirect: '/maker' })
               );
 
-            savePromise.catch((err3) => {
-              console.log(err3);
-              return res.status(400).json({ error: 'An unexpected error occurred' });
-            });
-
-            return savePromise;
-          }));
+              savePromise.catch((err3) => {
+                  console.log(err3);
+                  return res.status(400).json({ error: 'An unexpected error occurred' });
+              });
+              
+              return savePromise;
+        }));
     });
 };
 

@@ -66,62 +66,6 @@ var PostForm = function PostForm(props) {
     );
 };
 
-//Edit Form
-var EditForm = function EditForm(props) {
-    return React.createElement(
-        "form",
-        { id: "postForm",
-            onSubmit: handlePost,
-            name: "postForm",
-            action: "/update",
-            method: "POST"
-        },
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "*Name: "
-        ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charName", placeholder: "John Smith", defaultValue: props.posts.charName }),
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "Nickname(s): "
-        ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charNicks", placeholder: "Johnny", defaultValue: props.posts.charNicks }),
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "*Age: "
-        ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charAge", placeholder: "25", defaultValue: props.posts.charAge }),
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "*Occupation: "
-        ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "office worker", defaultValue: props.posts.charJob }),
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "*Description: "
-        ),
-        React.createElement("textarea", { id: "pContent", type: "text", name: "charDesc", placeholder: "Dull, forgettable, humble.", defaultValue: props.posts.charDesc }),
-        React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { id: "postSubmit", type: "submit", value: "Update" }),
-        React.createElement(
-            "p",
-            { className: "charTags" },
-            "*Required"
-        )
-    );
-};
-
-//Edit Post
-var postEdit = function postEdit(doc) {
-    ReactDOM.render(React.createElement(EditForm, { posts: doc, csrf: document.querySelector("#csrfVal").value }), document.querySelector("#posts"));
-};
-
 // Delete Posts
 var handleDelete = function handleDelete(e, post) {
 
@@ -157,14 +101,14 @@ var PostList = function PostList(props) {
                 "h3",
                 { className: "postTitle" },
                 " ",
-                post.charName,
+                post.title,
                 " "
             ),
             React.createElement(
                 "p",
                 { id: "postContent" },
                 " Also known as ",
-                post.charNicks
+                post.nicks
             ),
             React.createElement(
                 "p",
@@ -172,14 +116,14 @@ var PostList = function PostList(props) {
                 " ",
                 post.charName,
                 " is ",
-                post.charAge,
+                post.age,
                 " years old."
             ),
             React.createElement(
                 "p",
                 { id: "postContent" },
                 " Currently a ",
-                post.charJob,
+                post.job,
                 "."
             ),
             React.createElement("br", null),
@@ -187,7 +131,7 @@ var PostList = function PostList(props) {
                 "p",
                 { id: "postContent" },
                 " Details: ",
-                post.charDesc,
+                post.post,
                 " "
             ),
             React.createElement(
@@ -203,17 +147,6 @@ var PostList = function PostList(props) {
                 React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
                 React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
                 React.createElement("input", { id: "deleteButton", type: "submit", value: "Delete" })
-            ),
-            React.createElement(
-                "div",
-                { id: "editButton" },
-                React.createElement(
-                    "button",
-                    { type: "button", onClick: function onClick() {
-                            postEdit(props.posts);
-                        } },
-                    "Edit"
-                )
             )
         );
     });
@@ -269,6 +202,79 @@ var ChangePWForm = function ChangePWForm(props) {
     );
 };
 
+// Site About
+var AboutWindow = function AboutWindow() {
+    return React.createElement(
+        "div",
+        { id: "info" },
+        React.createElement(
+            "h3",
+            { className: "formTitle" },
+            "What can you do here?"
+        ),
+        React.createElement(
+            "p",
+            { id: "desc" },
+            "Going through existential crisis and can't sleep at ungodly hours at night? Worry not, you can post your thoughts and rants on here... For the viewing of no one but your own!"
+        )
+    );
+};
+
+// Purchasable Themes
+var ThemesWindow = function ThemesWindow() {
+    return React.createElement(
+        "div",
+        { id: "themes" },
+        React.createElement(
+            "h3",
+            { className: "formTitle" },
+            "THEMES"
+        ),
+        React.createElement(
+            "div",
+            { id: "thm1" },
+            React.createElement(
+                "p",
+                null,
+                "Autumn Theme"
+            ),
+            React.createElement(
+                "p",
+                { className: "purchase" },
+                "PURCHASE"
+            )
+        ),
+        React.createElement(
+            "div",
+            { id: "thm2" },
+            React.createElement(
+                "p",
+                null,
+                "Winter Theme"
+            ),
+            React.createElement(
+                "p",
+                { className: "purchase" },
+                "PURCHASE"
+            )
+        ),
+        React.createElement(
+            "div",
+            { id: "thm3" },
+            React.createElement(
+                "p",
+                null,
+                "Summer Theme"
+            ),
+            React.createElement(
+                "p",
+                { className: "purchase" },
+                "PURCHASE"
+            )
+        )
+    );
+};
+
 var loadPostsFromServer = function loadPostsFromServer() {
     sendAjax('GET', '/getPosts', null, function (data) {
         ReactDOM.render(React.createElement(PostList, { posts: data.posts }), document.querySelector("#posts"));
@@ -278,6 +284,14 @@ var loadPostsFromServer = function loadPostsFromServer() {
 // Windows For Different Pages
 var createPasswordChangeWindow = function createPasswordChangeWindow(csrf) {
     ReactDOM.render(React.createElement(ChangePWForm, { csrf: csrf }), document.querySelector("#posts"));
+};
+
+var createAboutWindow = function createAboutWindow() {
+    ReactDOM.render(React.createElement(AboutWindow, null), document.querySelector("#posts"));
+};
+
+var createThemesWindow = function createThemesWindow() {
+    ReactDOM.render(React.createElement(ThemesWindow, null), document.querySelector("#posts"));
 };
 
 var createMainWindow = function createMainWindow(csrf) {
@@ -294,6 +308,18 @@ var setup = function setup(csrf) {
     changePWButton.addEventListener("click", function (e) {
         e.preventDefault();
         createPasswordChangeWindow(csrf);
+        return false;
+    });
+
+    aboutButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        createAboutWindow();
+        return false;
+    });
+
+    themesButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        createThemesWindow();
         return false;
     });
 

@@ -12,32 +12,32 @@ const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
 const PostSchema = new mongoose.Schema({
-  charName: {
+  title: {
     type: String,
     required: true,
     trim: true,
     set: setName,
   },
 
-  charNicks: {
+  nicks: {
     type: String,
     required: false,
     trim: true,
   },
 
-  charAge: {
+  age: {
     type: Number,
     min: 0,
     required: true,
   },
 
-  charJob: {
+  job: {
     type: String,
     required: true,
     trim: true,
   },
 
-  charDesc: {
+  post: {
     type: String,
     required: true,
     trim: true,
@@ -63,13 +63,12 @@ PostSchema.statics.toAPI = (doc) => ({
   charDesc: doc.charDesc,
 });
 
+
 PostSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
-  return PostModel.find(search).select(
-      'charName charNicks charAge charJob charDesc')
-      .exec(callback);
+  return PostModel.find(search).select('title nicks age job post').exec(callback);
 };
 
 // Delete Posts
