@@ -3,8 +3,8 @@ const handlePost = (e) => {
     
     $("#postMessage").animate({width:'hide'}, 350);
     
-    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pSpecies").val() === '' ||
-        $("#pRace").val() === ''|| $("#pJob").val() === '' || $("#pDesc").val() === '') {
+    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pSpecies").val() === '' || 
+        $("#pJob").val() === '' || $("#pDesc").val() === '') {
         handleError("Required fields have not been filled yet.");
         return false;
     }
