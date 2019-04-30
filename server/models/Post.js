@@ -30,7 +30,19 @@ const PostSchema = new mongoose.Schema({
     min: 0,
     required: true,
   },
-
+    
+  species: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+    
+  race: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+    
   job: {
     type: String,
     required: true,
@@ -56,11 +68,13 @@ const PostSchema = new mongoose.Schema({
 });
 
 PostSchema.statics.toAPI = (doc) => ({
-  charName: doc.charName,
-  charNicks: doc.charNicks,
-  charAge: doc.charAge,
-  charJob: doc.charJob,
-  charDesc: doc.charDesc,
+  title: doc.charName,
+  nicks: doc.charNicks,
+  age: doc.charAge,
+  species: doc.charSpecies,
+  race: doc.charRace,
+  job: doc.charJob,
+  post: doc.charDesc,
 });
 
 
@@ -68,7 +82,7 @@ PostSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
-  return PostModel.find(search).select('title nicks age job post').exec(callback);
+  return PostModel.find(search).select('title nicks age species race job post').exec(callback);
 };
 
 // Delete Posts

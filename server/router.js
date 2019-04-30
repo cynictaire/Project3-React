@@ -12,8 +12,9 @@ const router = (app) => {
   app.post('/changePW', mid.requiresSecure, mid.requiresLogin, controllers.Account.changePW);
     
   app.get('/about', mid.requiresSecure, mid.requiresLogin, controllers.OtherPages.aboutPage);
-  app.get('/themes', mid.requiresSecure, mid.requiresLogin, controllers.OtherPages.themesPage);
-    
+  app.get('/subscription', mid.requiresSecure, mid.requiresLogin, controllers.OtherPages.subPage);
+  app.get('/tips', mid.requiresSecure, mid.requiresLogin, controllers.OtherPages.tipsPage);
+        
   app.get('/maker', mid.requiresLogin, controllers.Post.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Post.make);
   app.post('/delete', mid.requiresSecure, mid.requiresLogin, controllers.Post.deletePosts);

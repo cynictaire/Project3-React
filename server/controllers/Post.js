@@ -14,14 +14,17 @@ const makerPage = (req, res) => {
 };
 
 const makePost = (req, res) => {
-  if (!req.body.charName || !req.body.charAge || !req.body.charJob || !req.body.charDesc) {
-    return res.status(400).json({ error: 'Required informations have not been filled yet.' });
+  if (!req.body.charName || !req.body.charAge || !req.body.charSpecies 
+      || !req.body.charJob || !req.body.charDesc) {
+    return res.status(400).json({ error: 'Required information have not been filled yet.' });
   }
     
   const postData = {
     title: req.body.charName,
     nicks: req.body.charNicks,
     age: req.body.charAge,
+    species: req.body.charSpecies,
+    race: req.body.charRace,
     job: req.body.charJob,
     post: req.body.charDesc,
     owner: req.session.account._id,

@@ -5,7 +5,7 @@ var handlePost = function handlePost(e) {
 
     $("#postMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pJob").val() === '' || $("#pDesc").val() === '') {
+    if ($("#pName").val() === '' || $("#pAge").val() === '' || $("#pSpecies").val() === '' || $("#pRace").val() === '' || $("#pJob").val() === '' || $("#pDesc").val() === '') {
         handleError("Required fields have not been filled yet.");
         return false;
     }
@@ -27,29 +27,46 @@ var PostForm = function PostForm(props) {
             method: "POST"
         },
         React.createElement(
+            "h3",
+            { className: "formTitle" },
+            "\u2727 Create an OC! \u2727"
+        ),
+        React.createElement(
             "p",
             { className: "charTags" },
             "*Name: "
         ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charName", placeholder: "John Smith" }),
+        React.createElement("input", { id: "pName", type: "text", name: "charName", placeholder: "John Smith" }),
         React.createElement(
             "p",
             { className: "charTags" },
             "Nickname(s): "
         ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charNicks", placeholder: "Johnny" }),
+        React.createElement("input", { id: "pNicks", type: "text", name: "charNicks", placeholder: "Johnny" }),
         React.createElement(
             "p",
             { className: "charTags" },
             "*Age: "
         ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charAge", placeholder: "25" }),
+        React.createElement("input", { id: "pAge", type: "text", name: "charAge", placeholder: "25" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "*Species: "
+        ),
+        React.createElement("input", { id: "pSpecies", type: "text", name: "charSpecies", placeholder: "human" }),
+        React.createElement(
+            "p",
+            { className: "charTags" },
+            "Race: "
+        ),
+        React.createElement("input", { id: "pRace", type: "text", name: "charRace", placeholder: "caucasian" }),
         React.createElement(
             "p",
             { className: "charTags" },
             "*Occupation: "
         ),
-        React.createElement("input", { id: "pTag", type: "text", name: "charJob", placeholder: "office worker" }),
+        React.createElement("input", { id: "pJob", type: "text", name: "charJob", placeholder: "office worker" }),
         React.createElement(
             "p",
             { className: "charTags" },
@@ -92,7 +109,6 @@ var PostList = function PostList(props) {
 
     var postNodes = props.posts.map(function (post) {
 
-        //let tagStr = post.tag.split(",");
         return React.createElement(
             "div",
             { key: post._id, className: "post" },
@@ -108,29 +124,34 @@ var PostList = function PostList(props) {
                 "p",
                 { id: "postContent" },
                 " Also known as ",
-                post.nicks
+                post.nicks,
+                "."
             ),
             React.createElement(
                 "p",
                 { id: "postContent" },
                 " ",
-                post.charName,
-                " is ",
+                post.title,
+                " is a ",
                 post.age,
-                " years old."
-            ),
-            React.createElement(
-                "p",
-                { id: "postContent" },
-                " Currently a ",
+                " years old ",
+                post.race,
+                " ",
+                post.species,
+                ", who enjoys being a ",
                 post.job,
                 "."
             ),
             React.createElement("br", null),
             React.createElement(
                 "p",
+                { id: "bgTitle" },
+                "Background: "
+            ),
+            React.createElement(
+                "p",
                 { id: "postContent" },
-                " Details: ",
+                " ",
                 post.post,
                 " "
             ),
@@ -147,7 +168,8 @@ var PostList = function PostList(props) {
                 React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
                 React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
                 React.createElement("input", { id: "deleteButton", type: "submit", value: "Delete" })
-            )
+            ),
+            React.createElement("img", { src: "/assets/img/divider.gif", alt: "post divider", className: "postDivider" })
         );
     });
 
@@ -192,7 +214,7 @@ var ChangePWForm = function ChangePWForm(props) {
         React.createElement(
             "h3",
             { className: "formTitle" },
-            "CHANGE PASSWORD"
+            "\u2727 Password Change \u2727"
         ),
         React.createElement("input", { id: "oldPass", type: "password", name: "oldPass", placeholder: "current password" }),
         React.createElement("input", { id: "pass", type: "passoword", name: "pass", placeholder: "new password" }),
@@ -210,66 +232,182 @@ var AboutWindow = function AboutWindow() {
         React.createElement(
             "h3",
             { className: "formTitle" },
-            "What can you do here?"
+            "\u2727 What is OC Tracker? \u2727"
         ),
         React.createElement(
-            "p",
-            { id: "desc" },
-            "Going through existential crisis and can't sleep at ungodly hours at night? Worry not, you can post your thoughts and rants on here... For the viewing of no one but your own!"
+            "div",
+            { "class": "desc" },
+            React.createElement(
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    "Have too many original characters you can't keep track of?"
+                ),
+                "Yes!",
+                React.createElement(
+                    "li",
+                    null,
+                    "Do you have a hard time remembering small details of your characters?"
+                ),
+                "YES!",
+                React.createElement(
+                    "li",
+                    null,
+                    "Want to have a simple way to gather all your characters in one place?"
+                ),
+                "Y E S!"
+            ),
+            React.createElement(
+                "p",
+                null,
+                "If you answered yes to all the questions above, OC Tracker is the place for you!"
+            ),
+            React.createElement(
+                "p",
+                null,
+                "On this site, you will be able to keep track of all your characters--from the mains to the one-off background characters!"
+            ),
+            React.createElement(
+                "p",
+                null,
+                "If you have trouble with your character creation process, you can check out the TIPS section for help!"
+            )
         )
     );
 };
 
-// Purchasable Themes
-var ThemesWindow = function ThemesWindow() {
+// Yearly subscription service
+var SubWindow = function SubWindow() {
     return React.createElement(
         "div",
-        { id: "themes" },
+        { id: "subscription" },
         React.createElement(
             "h3",
             { className: "formTitle" },
-            "THEMES"
+            "\u2727 Subscription \u2727"
         ),
         React.createElement(
             "div",
-            { id: "thm1" },
+            { "class": "desc" },
             React.createElement(
                 "p",
                 null,
-                "Autumn Theme"
+                "For $19.99 a year, you will be able to:"
             ),
             React.createElement(
-                "p",
-                { className: "purchase" },
-                "PURCHASE"
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    "Upload art of your original characters."
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    "Request art for your original characters (one per month)."
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    "Receive daily prompts to improve your writing skill."
+                )
             )
         ),
         React.createElement(
             "div",
-            { id: "thm2" },
-            React.createElement(
-                "p",
-                null,
-                "Winter Theme"
-            ),
-            React.createElement(
-                "p",
-                { className: "purchase" },
-                "PURCHASE"
-            )
+            { id: "sub" },
+            "SUBCRIBE NOW!"
+        )
+    );
+};
+
+// Tips Page
+var TipsWindow = function TipsWindow() {
+    return React.createElement(
+        "div",
+        { id: "tips" },
+        React.createElement(
+            "h3",
+            { className: "formTitle" },
+            "\u2727 Tips and Tricks \u2727"
         ),
         React.createElement(
             "div",
-            { id: "thm3" },
+            { "class": "desc" },
             React.createElement(
                 "p",
                 null,
-                "Summer Theme"
+                "Needs help coming up with names? Check out these sites!"
+            ),
+            React.createElement(
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "https://www.fantasynamegenerators.com/" },
+                        "Fantasy Name Generator"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "https://www.behindthename.com/" },
+                        "Behind the Name"
+                    )
+                )
             ),
             React.createElement(
                 "p",
-                { className: "purchase" },
-                "PURCHASE"
+                null,
+                "For coming up with the story and get started on writing!"
+            ),
+            React.createElement(
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "http://writingexercises.co.uk/index.php" },
+                        "Writing Exercises"
+                    )
+                )
+            ),
+            React.createElement(
+                "p",
+                null,
+                "Other useful sites!"
+            ),
+            React.createElement(
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "http://www.onelook.com/reverse-dictionary.shtml" },
+                        "Reverse Dictionary"
+                    )
+                ),
+                React.createElement(
+                    "li",
+                    null,
+                    React.createElement(
+                        "a",
+                        { href: "http://phrontistery.info/a.html" },
+                        "The Phrontistery"
+                    )
+                )
             )
         )
     );
@@ -283,15 +421,23 @@ var loadPostsFromServer = function loadPostsFromServer() {
 
 // Windows For Different Pages
 var createPasswordChangeWindow = function createPasswordChangeWindow(csrf) {
-    ReactDOM.render(React.createElement(ChangePWForm, { csrf: csrf }), document.querySelector("#posts"));
+    document.querySelector("#posts").style.display = "none";
+    ReactDOM.render(React.createElement(ChangePWForm, { csrf: csrf }), document.querySelector("#makePost"));
 };
 
 var createAboutWindow = function createAboutWindow() {
-    ReactDOM.render(React.createElement(AboutWindow, null), document.querySelector("#posts"));
+    document.querySelector("#posts").style.display = "none";
+    ReactDOM.render(React.createElement(AboutWindow, null), document.querySelector("#makePost"));
 };
 
-var createThemesWindow = function createThemesWindow() {
-    ReactDOM.render(React.createElement(ThemesWindow, null), document.querySelector("#posts"));
+var createSubWindow = function createSubWindow() {
+    document.querySelector("#posts").style.display = "none";
+    ReactDOM.render(React.createElement(SubWindow, null), document.querySelector("#makePost"));
+};
+
+var createTipsWindow = function createTipsWindow() {
+    document.querySelector("#posts").style.display = "none";
+    ReactDOM.render(React.createElement(TipsWindow, null), document.querySelector("#makePost"));
 };
 
 var createMainWindow = function createMainWindow(csrf) {
@@ -303,7 +449,8 @@ var createMainWindow = function createMainWindow(csrf) {
 var setup = function setup(csrf) {
     var changePWButton = document.querySelector("#changePWButton");
     var aboutButton = document.querySelector("#aboutButton");
-    var themesButton = document.querySelector("#themesButton");
+    var subButton = document.querySelector("#subButton");
+    var tipsButton = document.querySelector("#tipsButton");
 
     changePWButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -317,9 +464,15 @@ var setup = function setup(csrf) {
         return false;
     });
 
-    themesButton.addEventListener("click", function (e) {
+    subButton.addEventListener("click", function (e) {
         e.preventDefault();
-        createThemesWindow();
+        createSubWindow();
+        return false;
+    });
+
+    tipsButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        createTipsWindow();
         return false;
     });
 
